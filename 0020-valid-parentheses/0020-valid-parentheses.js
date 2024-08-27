@@ -2,22 +2,18 @@
  * @param {string} s
  * @return {boolean}
  */
-const isValid = function (s) {
-  const bracketSet = {
-    "[": "]",
-    "(": ")",
-    "{": "}",
-  };
-  const charStack = s.split("");
-  const validationStack = [];
-
-  for (let i = 0; i < s.length; i++) {
-    const char = charStack.shift();
+var isValid = function(s) {
+    const stack = [];
+    let index = 0;
     
-    bracketSet[validationStack.at(-1)] === char
-      ? validationStack.pop()
-      : validationStack.push(char);
-  }
-
-  return !validationStack.length;
+    while (index < s.length) {        
+        if (stack[stack.length - 1] === '(' && s[index] === ')') stack.pop();
+        else if (stack[stack.length - 1] === '{' && s[index] === '}') stack.pop();
+        else if (stack[stack.length - 1] === '[' && s[index] === ']') stack.pop();
+        else stack.push(s[index]);
+        index += 1;
+    }
+    
+    return stack.length === 0 ? true : false;
+    
 };
