@@ -10,44 +10,40 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
- 
-var mergeTwoLists = function (list1, list2) {
-  let node1 = list1;
-  let node2 = list2;
-
-  let arr = [];
-  while (node1 && node2) {
-    let value;
-    if (node1.val > node2.val) {
-      value = node2.val;
-      node2 = node2.next;
-    } else {
-      value = node1.val;
-      node1 = node1.next;
+var mergeTwoLists = function(list1, list2) {
+    if (!list1 && !list2) return list1;
+    
+    const head = new ListNode();
+    let pointer1 = list1;
+    let pointer2 = list2;
+    let tail = head;
+    
+    while (pointer1 != null && pointer2 !== null) {
+        if (pointer1.val < pointer2.val) {
+            tail.val = pointer1.val;
+            tail.next = new ListNode();
+            tail = tail.next;
+            pointer1 = pointer1.next;
+        } else {
+            tail.val = pointer2.val;
+            tail.next = new ListNode();
+            tail = tail.next;
+            pointer2 = pointer2.next;
+        }
     }
-    arr.push(value);
-  }
-
-  while (node1) {
-    arr.push(node1.val);
-    node1 = node1.next;
-  }
-  while (node2) {
-    arr.push(node2.val);
-    node2 = node2.next;
-  }
-
-  let head = null;
-  let tail = null;
-
-  arr.forEach((value) => {
-    if (!head) {
-      head = tail = new ListNode(value, null);
-    } else {
-      tail.next = new ListNode(value, null);
-      tail = tail.next;
+    
+    let lastPointer = pointer1 ? pointer1 : pointer2; 
+    while (lastPointer !== null) {
+        tail.val = lastPointer.val;
+        
+        if(lastPointer.next) {
+            tail.next = new ListNode();
+            tail = tail.next;
+        }
+        
+        lastPointer = lastPointer.next;
     }
-  });
 
-  return head;
+    return head;  
+    
 };
