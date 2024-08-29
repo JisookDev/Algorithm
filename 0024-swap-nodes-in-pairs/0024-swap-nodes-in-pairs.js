@@ -10,14 +10,13 @@
  * @return {ListNode}
  */
 var swapPairs = function(head) {
-  if (!head || !head.next) return head;
+    //포인터로 첫번째 & 다음것 스왑 -> 포인터도 같이 이동해서 그 다음으로 이동해서 다음것과 스왑
+    if (!head || !head.next) return head;
 
-  let result = swapPairs(head.next.next);
-  let currNode = head;
-  let nextNode = head.next;
-
-  currNode.next = result;
-  nextNode.next = currNode;
-
-  return nextNode;
+    let temp = head.next;
+    head.next = temp.next;
+    temp.next = head;
+    head.next = swapPairs(head.next);
+    
+    return temp
 };
