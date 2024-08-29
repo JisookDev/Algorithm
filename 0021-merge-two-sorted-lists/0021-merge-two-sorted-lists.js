@@ -18,7 +18,7 @@ var mergeTwoLists = function(list1, list2) {
     let pointer2 = list2;
     let tail = head;
     
-    while (pointer1 != null && pointer2 !== null) {
+    while (pointer1 !== null && pointer2 !== null) {
         if (pointer1.val < pointer2.val) {
             tail.val = pointer1.val;
             tail.next = new ListNode();
@@ -32,18 +32,24 @@ var mergeTwoLists = function(list1, list2) {
         }
     }
     
-    let lastPointer = pointer1 ? pointer1 : pointer2; 
-    while (lastPointer !== null) {
-        tail.val = lastPointer.val;
-        
-        if(lastPointer.next) {
+    while (pointer1) {
+        tail.val = pointer1.val;
+        if (pointer1.next) {
             tail.next = new ListNode();
             tail = tail.next;
         }
-        
-        lastPointer = lastPointer.next;
-    }
+        pointer1 = pointer1.next;
 
-    return head;  
+    } 
     
+    while (pointer2) {
+        tail.val = pointer2.val;
+        if (pointer2.next) {
+            tail.next = new ListNode();
+            tail = tail.next;
+        }
+        pointer2 = pointer2.next;
+    }
+    
+    return head;
 };
