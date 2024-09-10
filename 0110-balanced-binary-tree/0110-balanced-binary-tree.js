@@ -10,14 +10,18 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
+var isBalanced = function(root) {
+if (!root) return true;
 
- var isBalanced = function(root) {
-  const bfs = (node) => {
-    if (!node) return 0;
-    let left = 1 + bfs(node.left);
-    let right = 1 + bfs(node.right);
-    if (Math.abs(left - right) > 1) return Infinity;
-    return Math.max(left, right);
+  const DFS = (node) => {
+    if (node === null) return 0;
+    const left = DFS(node.left);
+    const right = DFS(node.right);
+    if (Math.abs(right - left) > 1) return Infinity;
+    return Math.max(left, right) + 1;
   };
-  return bfs(root) === Infinity ? false : true;
+
+  return DFS(root) !== Infinity ? true : false;
+    
+    
 };
